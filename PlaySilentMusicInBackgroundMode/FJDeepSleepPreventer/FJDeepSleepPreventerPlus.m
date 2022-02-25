@@ -48,7 +48,7 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    
+    NSLog(@"%@",change);
 }
 
 - (void)setupAudioSession {
@@ -97,6 +97,10 @@
 
 //申请后台任务
 - (void)applyforBackgroundTask{
+    if(self.backgroundTaskIdentifier != UIBackgroundTaskInvalid) {
+        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
+        self.backgroundTaskIdentifier = UIBackgroundTaskInvalid;
+    }
     self.backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         if (self.backgroundTaskIdentifier!=UIBackgroundTaskInvalid) {
             [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
